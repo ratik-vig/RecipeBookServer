@@ -14,6 +14,9 @@ connectToDB()
 app.use('/api/v1/users', users)
 app.use('/api/v1/recipes', recipes)
 
+app.get('/', (req,res) => {
+    res.send(200)
+})
 app.listen(PORT, () => {
     console.log(`Server started at port: ${PORT}`)
 })
