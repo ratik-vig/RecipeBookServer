@@ -7,6 +7,17 @@ const Recipe = require('../../models/Recipe')
 
 const router = express.Router()
 
+router.get('/search', async(req, res) => {
+    const {name} = req.query
+    try {
+        const recipes = await Recipe.find({name: {$regex: name, $options: '$i'}})
+        res.json(recipes)
+    } catch (error) {
+        console.log(error)
+        res.status(500).send('server error')
+    }
+})
+
 router.post('/new', auth, [
     check('name', 'Name is required').not().isEmpty(),
     check('cuisine', 'Cuisine is required').not().isEmpty(),
